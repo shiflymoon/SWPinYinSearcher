@@ -43,6 +43,9 @@ static NSDictionary *hanzi2pinyin;
     [self setupHashtable];
     for (int i=0; i<self.length; i++) {
         NSString *pinyinString = hanzi2pinyin[[self substringWithRange:NSMakeRange(i, 1)]];
+        if(![pinyinString length]){//修复找不到拼音crash，比如名字中有123等数字或者字母等
+            pinyinString = [self substringWithRange:NSMakeRange(i, 1)];
+        }
         [allCharactersPinyins addObject:[pinyinString componentsSeparatedByString:@","]];
     }
     int numberOfPinyinCombinations = 1;     // 所有可能组合的总数
